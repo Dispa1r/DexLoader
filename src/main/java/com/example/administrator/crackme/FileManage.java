@@ -23,12 +23,16 @@ public class FileManage {
             ByteArrayOutputStream os=new ByteArrayOutputStream();
             byte[] buf=new byte[1024];
             int read;
+            int flag=0;
             while((read=is.read(buf))!=-1){
+                if(flag==0){
+                     buf[0]=100;
+                     buf[1]=101;
+                     buf[2]=120;
+                }
                 os.write(buf,0,read);
             }
-            buf[0]=100;
-            buf[1]=101;
-            buf[2]=120;
+           
             byte[] dec= (decMethod !=null) ? ((byte[])decMethod.invoke(null,os.toByteArray())) : os.toByteArray();
             is.close();os.close();
             FileOutputStream of=new FileOutputStream(new File(relFile));
